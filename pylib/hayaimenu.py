@@ -41,9 +41,15 @@ class Section(object):
 
 
 class HayaiMenu:
-    def __init__(self, menu_title):
+    def __init__(self, menu_title, **kwargs):
         self.root = Section(menu_title, 0)
         self.current = self.root
+        self.separator_char = "="
+        self.separator_width = 50
+        if 'separator_char' in kwargs:
+            self.char = kwargs['separator_char']
+        if 'separator_width' in kwargs:
+            self.char = kwargs['separator_width']
 
     def get_section(self, title: str, level: int):
         focus = self.root
@@ -57,6 +63,9 @@ class HayaiMenu:
     def next(self, index: int):
         return self.root.next(index)
 
+    def set_current_next(self, index: int):
+        self.current = self.root.next(index)
+
     def set_current(self, title: str, level: int):
         self.current = self.get_section(title, level)
 
@@ -65,3 +74,7 @@ class HayaiMenu:
 
     def get_root(self):
         return self.root
+
+    def print(self):
+        print(self.current.title.center(self.separator_width,self.separator_char))
+        self.current.print()

@@ -8,5 +8,6 @@ async def hi(lmao):
 menu = HayaiMenu('Main Menu')
 menu.get_current().add_sub_section('One', sub_sections=['One.One', 'One.Two'])
 
-print(menu.get_current().title)
-print(menu.get_current().next(0).print())
+menu.print()
+menu.set_current_next(0)
+menu.print()
