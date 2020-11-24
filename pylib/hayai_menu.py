@@ -122,8 +122,11 @@ class HayaiMenu:  # Class that handles the entire menu
         user_input = input(': ')
         for section in self.current.sub_sections:
             if user_input.lower() in section.title.lower():
-                self.set_current_with_section(section)
-                self.current.run()
+                if section.sub_sections:
+                    self.set_current_with_section(section)
+                    self.current.run()
+                else:
+                    section.run()
 
     def run(self):
         self.current.run()
