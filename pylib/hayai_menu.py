@@ -100,6 +100,9 @@ class HayaiMenu:  # Class that handles the entire menu
     def set_current_next(self, index: int):
         self.current = self.current.next(index)
 
+    def set_current_with_section(self, section: Section):
+        self.current = section
+
     def set_current(self, title: str, level: int):
         self.current = self.get_section(title, level)
 
@@ -112,6 +115,15 @@ class HayaiMenu:  # Class that handles the entire menu
     def print(self, **kwargs):
         Bcolors.print(self.current.title.center(self.separator_width, self.separator_char), Bcolors.OKGREEN)
         self.current.print(**kwargs)
+        Bcolors.print(''.center(self.separator_width, self.separator_char), Bcolors.OKGREEN)
+
+    def select(self):
+        self.print()
+        user_input = input(': ')
+        for section in self.current.sub_sections:
+            if user_input.lower() in section.title.lower():
+                self.set_current_with_section(section)
+                self.current.run()
 
     def run(self):
         self.current.run()

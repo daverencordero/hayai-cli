@@ -31,7 +31,6 @@ def divide():
 
 menu_tree = {
     'Calculator': {
-        'root': True,
         'sub_sections': {
             'Operate': {
                 'sub_sections': {
@@ -60,4 +59,6 @@ menu_tree = {
 
 menu = HayaiMenu.make_menu_from_tree(menu_tree)
 
-print(menu.get_current().title)
+menu.select()
+menu.select()
+menu.select()
