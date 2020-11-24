@@ -22,7 +22,7 @@ class Section(object):
 
     def add_sub_sections(self, *args):
         for menu_title in args:
-            self.sub_sections.append(Section(menu_title, self.level+1, parent=self))
+            self.sub_sections.append(Section(menu_title, self.level + 1, parent=self))
 
     def add_sub_section(self, menu_title, **kwargs):
         kwargs['parent'] = self
@@ -49,7 +49,7 @@ class HayaiMenu:
         if 'separator_char' in kwargs:
             self.char = kwargs['separator_char']
         if 'separator_width' in kwargs:
-            self.char = kwargs['separator_width']
+            self.separator_width = kwargs['separator_width']
 
     def get_section(self, title: str, level: int):
         focus = self.root
@@ -76,5 +76,21 @@ class HayaiMenu:
         return self.root
 
     def print(self):
-        print(self.current.title.center(self.separator_width,self.separator_char))
+        Bcolors.print(self.current.title.center(self.separator_width, self.separator_char), Bcolors.OKGREEN)
         self.current.print()
+
+
+class Bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+    @staticmethod
+    def print(text: str, color: str):
+        print(color + text + Bcolors.HEADER)
