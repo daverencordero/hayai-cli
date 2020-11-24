@@ -30,14 +30,18 @@ class Section(object):
         self.sub_sections.append(menu)
 
     def print(self, **kwargs):
-        for items in self.sub_sections:
+        for index, section in enumerate(self.sub_sections):
+            text_format = '> {}'
+            if 'start_index' in kwargs:
+                index += kwargs['start_index']
             if 'format' in kwargs:
-                print(kwargs['format'].format(items.title))
-            else:
-                print('> {}'.format(items.title))
+                text_format = kwargs['format']
+                text_format = text_format.replace("#", str(index))
+            print(text_format.format(section.title))
 
     def run(self):
-        self.method()
+        if self.method is not None:
+            self.method()
 
 
 class HayaiMenu:
@@ -75,9 +79,12 @@ class HayaiMenu:
     def get_root(self):
         return self.root
 
-    def print(self):
+    def print(self, **kwargs):
         Bcolors.print(self.current.title.center(self.separator_width, self.separator_char), Bcolors.OKGREEN)
-        self.current.print()
+        self.current.print(**kwargs)
+
+    def run(self):
+        self.current.run()
 
 
 class Bcolors:
